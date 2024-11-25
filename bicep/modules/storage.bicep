@@ -1,18 +1,9 @@
 import * as f from './../functions.bicep'
 
 param project string
-param storageIdentifier string = 'st'
-
-@allowed([
-  'dev'
-  'qa'
-  'prod'
-])
-@description('The target environment for the deployment')
 param environment string
-
-@description('The Azure region where resources will be deployed')
 param location string = resourceGroup().location
+param storageIdentifier string = 'st'
 
 var environmentSettings = {
   dev: {
@@ -35,5 +26,17 @@ resource storage 'Microsoft.Storage/storageAccounts@2023-05-01' = {
     name: environmentSettings[environment].skuName
   }
 }
-output storageKey string = storage.listKeys().keys[0].value
+
+resource blobService 'Microsoft.Storage/storageAccounts/blobServices@2023-05-01' = {
+  parent: storage
+  name: 'default'
+}
+
+resource testContainer 'Microsoft.Storage/storageAccounts/blobServices/containers@2023-05-01' = {
+  parent: blobService
+  name: 'test'
+}
+//output storageKey string = storage.listKeys().keys[0].value
 output storageName string = storage.name
+output storageBlobEndpoint string = storage.properties.primaryEndpoints.blob
+output storageTestContainerName string = testContainer.name

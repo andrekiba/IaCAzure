@@ -1,19 +1,9 @@
 import * as f from './../functions.bicep'
 
 param project string
-param sqlDbIdentifier string = 'db'
-
-@allowed([
-  'dev'
-  'qa'
-  'prod'
-])
-@description('The target environment for the deployment')
 param environment string
-
-@description('The Azure region where resources will be deployed')
 param location string = resourceGroup().location
-
+param sqlDbIdentifier string = 'db'
 @description('The existing Sql Server Name')
 param existingSqlServeName string = ''
 

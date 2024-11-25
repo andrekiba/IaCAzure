@@ -1,24 +1,13 @@
 import * as f from './../functions.bicep'
 
 param project string
+param environment string
+param location string = resourceGroup().location
 param planIdentifier string = 'plan'
 param appIdentifier string = 'app'
-
-@allowed([
-  'dev'
-  'qa'
-  'prod'
-])
-@description('The target environment for the deployment')
-param environment string
-
-@description('The Azure region where resources will be deployed')
-param location string = resourceGroup().location
-
 @description('Set to true if you want to create a new app service plan')
 param createNewPlan bool = true
-
-@description('The existing App Service Plan ID. Mandatory if createNewPlan is set to false')
+@description('The existing app service plan id. Mandatory if createNewPlan is set to false')
 param existingPlanId string = ''
 
 var environmentSettings = {
@@ -46,10 +35,26 @@ resource plan 'Microsoft.Web/serverfarms@2024-04-01' = if (createNewPlan) {
   }
 }
 
+/*
+resource appManagedIdentity 'Microsoft.ManagedIdentity/userAssignedIdentities@2023-07-31-preview' = {
+  name: '${project}-${environment}-${appIdentifier}-mi'
+  location: location
+}
+*/
+
 var appName = '${project}-${environment}-${appIdentifier}-${f.unique4()}'
 resource app 'Microsoft.Web/sites@2024-04-01' = {
   name: appName
   location: location
+  identity: {
+    type: 'SystemAssigned'
+    /*
+    type: 'UserAssigned'
+    userAssignedIdentities: {
+      '${appManagedIdentity.id}': {}
+    }
+    */
+  }
   properties: {
     serverFarmId: createNewPlan ? plan.id : existingPlanId
     siteConfig: {
@@ -60,3 +65,4 @@ resource app 'Microsoft.Web/sites@2024-04-01' = {
 
 output appUri string = app.properties.defaultHostName
 output appName string = app.name
+output appIdentity string = app.identity.principalId

@@ -1,7 +1,17 @@
 targetScope = 'subscription'
 
+@description('The name of the project')
 param project string
+
+@allowed([
+  'dev'
+  'qa'
+  'prod'
+])
+@description('The target environment for the deployment')
 param environment string
+
+@description('The Azure region where resources will be deployed')
 param location string
 
 var rgName = '${project}-${environment}-rg'
@@ -37,8 +47,10 @@ module sqlSrvDeployment './modules/sqlSrv.bicep' = {
     project: project
     environment: environment
     location: location
-    administratorLogin: 'adminLogin'
-    administratorLoginPassword: 'adminPassword'
+    //administratorLogin: 'adminLogin'
+    //administratorLoginPassword: 'adminPassword'
+    administratorManagedIdentityName: ''
+    administratorManagedIdentityId: appDeployment.outputs.appIdentity
   }
 }
 
@@ -60,5 +72,24 @@ module sqlDbDeployment './modules/sqlDb.bicep' = {
     environment: environment
     location: location
     existingSqlServeName: sqlSrvDeployment.outputs.sqlServerName
+  }
+}
+
+module aiDeployment './modules/ai.bicep' = {
+  scope: rg
+  name: 'aiDeployment'
+  params: {
+    project: project
+    environment: environment
+    location: location
+  }
+}
+
+module rolesDeployment './modules/roles.bicep' = {
+  scope: rg
+  name: 'rolesDeployment'
+  params: {
+    appIdentiy: appDeployment.outputs.appIdentity
+    storageAccountName: storageDeployment.outputs.storageName
   }
 }
