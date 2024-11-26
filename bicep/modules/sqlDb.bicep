@@ -3,7 +3,7 @@ import * as f from './../functions.bicep'
 param project string
 param environment string
 param location string = resourceGroup().location
-param sqlDbIdentifier string = 'db'
+param sqlDbIdentifier string = 'sqldb'
 @description('The existing Sql Server Name')
 param existingSqlServeName string = ''
 

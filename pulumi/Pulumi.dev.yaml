@@ -1,3 +1,4 @@
 config:
   azure-native:location: italynorth
   azure-native:subscriptionId: 4efd1466-95b2-4988-9a46-20f036b1ce29
+  azure-native:tenantId: 07ba1591-8c19-4137-91bc-38c1518925ba

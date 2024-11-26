@@ -20,7 +20,7 @@ resource sqlSrv 'Microsoft.Sql/servers@2024-05-01-preview' = {
     //administratorLoginPassword: administratorLoginPassword
     administrators: {
       administratorType: 'ActiveDirectory'
-      azureADOnlyAuthentication: false
+      azureADOnlyAuthentication: true
       login: administratorManagedIdentityName
       sid: administratorManagedIdentityId
       tenantId: subscription().tenantId
