@@ -26,7 +26,7 @@ public class Storage : ComponentResource
     
     public Storage(string name, StorageArgs args, ComponentResourceOptions options = null) : base("wpc:custom:storage", name, args, options)
     {
-        var storageName = $"{args.Project}{args.Environment}st";
+        var storageName = $"{args.Project.Replace("-", "")}{args.Environment}st";
         var storageAccount = new ST.StorageAccount(storageName, new ST.StorageAccountArgs
         {
             AccountName = storageName,

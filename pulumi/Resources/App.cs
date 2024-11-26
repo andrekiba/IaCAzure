@@ -13,6 +13,7 @@ public class AppArgs : ResourceArgs
     public Input<string> ResourceGroupName { get; set; }
     public bool CreateNewPlan { get; set; } = true;
     public string ExistingPlanId { get; set; }
+    public Input<string> InstrumentationKey { get; set; }
 }
 
 public class App : ComponentResource
@@ -43,6 +44,21 @@ public class App : ComponentResource
                 Sku = skuArgs[args.Environment]
             }, new CustomResourceOptions { Parent = this });
         }
+
+        var appSettings = new InputList<NameValuePairArgs>();
+        if(args.InstrumentationKey != null)
+        {
+            appSettings.Add(new NameValuePairArgs
+            {
+                Name = "APPINSIGHTS_INSTRUMENTATIONKEY",
+                Value = args.InstrumentationKey
+            });
+            appSettings.Add(new NameValuePairArgs
+            {
+                Name = "APPLICATIONINSIGHTS_CONNECTION_STRING",
+                Value = args.InstrumentationKey.Apply(x => $"InstrumentationKey={x}")
+            });
+        }
         
         var appName = $"{args.Project}-{args.Environment}-app";
         var app = new WebApp(appName, new WebAppArgs
@@ -55,6 +71,10 @@ public class App : ComponentResource
             {
                 Type = ManagedServiceIdentityType.SystemAssigned
             },
+            SiteConfig = new SiteConfigArgs
+            {
+                AppSettings = appSettings
+            }
         }, new CustomResourceOptions { Parent = this });
         
         AppUri = app.DefaultHostName;

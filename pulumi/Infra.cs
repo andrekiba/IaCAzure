@@ -41,7 +41,7 @@ public class Infra : Stack
             Environment = stackName,
             Location = location,
             ResourceGroupName = resourceGroup.Name,
-            CreateNewPlan = true
+            InstrumentationKey = log.InstrumentationKey
         });
         
         const string sqlName = "wpc-custom-sql";

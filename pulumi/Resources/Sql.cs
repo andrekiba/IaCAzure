@@ -24,9 +24,9 @@ public class Sql : ComponentResource
 {
     readonly Dictionary<string, SkuArgs> skuArgs = new()
     {
-        { "dev", new SkuArgs { Name = "S1", Capacity = 1 } },
-        { "qa", new SkuArgs { Name = "S2", Capacity = 2 } },
-        { "prod", new SkuArgs { Name = "S3", Capacity = 2 } }
+        { "dev", new SkuArgs { Name = "S1"} },
+        { "qa", new SkuArgs { Name = "S2" } },
+        { "prod", new SkuArgs { Name = "S3"} }
     };
     
     public Sql(string name, SqlArgs args, ComponentResourceOptions options = null) : base("wpc:custom:sql", name, args, options)

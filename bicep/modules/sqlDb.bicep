@@ -10,15 +10,12 @@ param existingSqlServeName string = ''
 var environmentSettings = {
   dev: {
     skuName: 'S0'
-    skuCapacity: 1
   }
   qa: {
     skuName: 'S1'
-    skuCapacity: 1
   }
   prod: {
     skuName: 'S3'
-    skuCapacity: 2
   }
 }
 
@@ -33,7 +30,6 @@ resource db 'Microsoft.Sql/servers/databases@2024-05-01-preview' = {
   location: location
   sku: {
     name: environmentSettings[environment].skuName
-    capacity: environmentSettings[environment].skuCapacity
   }
   properties:{
     collation: 'SQL_Latin1_General_CP1_CI_AS'
