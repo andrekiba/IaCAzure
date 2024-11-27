@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.30.23.60470",
-      "templateHash": "18328894142267784030"
+      "version": "0.31.92.45157",
+      "templateHash": "10050075792086587022"
     }
   },
   "parameters": {
@@ -71,8 +71,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.30.23.60470",
-              "templateHash": "11527833081128772963"
+              "version": "0.31.92.45157",
+              "templateHash": "7503496464339955292"
             }
           },
           "functions": [
@@ -225,8 +225,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.30.23.60470",
-              "templateHash": "2459463992055629891"
+              "version": "0.31.92.45157",
+              "templateHash": "10511798087473378929"
             }
           },
           "functions": [
@@ -347,7 +347,7 @@
             "value": "[parameters('location')]"
           },
           "administratorManagedIdentityName": {
-            "value": ""
+            "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'appDeployment'), '2022-09-01').outputs.appName.value]"
           },
           "administratorManagedIdentityId": {
             "value": "[reference(extensionResourceId(format('/subscriptions/{0}/resourceGroups/{1}', subscription().subscriptionId, variables('rgName')), 'Microsoft.Resources/deployments', 'appDeployment'), '2022-09-01').outputs.appIdentity.value]"
@@ -360,8 +360,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.30.23.60470",
-              "templateHash": "6561778140166616505"
+              "version": "0.31.92.45157",
+              "templateHash": "16301717815896261711"
             }
           },
           "functions": [
@@ -417,7 +417,7 @@
               "properties": {
                 "administrators": {
                   "administratorType": "ActiveDirectory",
-                  "azureADOnlyAuthentication": false,
+                  "azureADOnlyAuthentication": true,
                   "login": "[parameters('administratorManagedIdentityName')]",
                   "sid": "[parameters('administratorManagedIdentityId')]",
                   "tenantId": "[subscription().tenantId]"
@@ -470,8 +470,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.30.23.60470",
-              "templateHash": "6225819694367159606"
+              "version": "0.31.92.45157",
+              "templateHash": "8943501750979279650"
             }
           },
           "functions": [
@@ -588,8 +588,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.30.23.60470",
-              "templateHash": "9743487992215585539"
+              "version": "0.31.92.45157",
+              "templateHash": "12303028919225780791"
             }
           },
           "functions": [
@@ -624,7 +624,7 @@
             },
             "sqlDbIdentifier": {
               "type": "string",
-              "defaultValue": "db"
+              "defaultValue": "sqldb"
             },
             "existingSqlServeName": {
               "type": "string",
@@ -637,16 +637,13 @@
           "variables": {
             "environmentSettings": {
               "dev": {
-                "skuName": "S0",
-                "skuCapacity": 1
+                "skuName": "S0"
               },
               "qa": {
-                "skuName": "S1",
-                "skuCapacity": 1
+                "skuName": "S1"
               },
               "prod": {
-                "skuName": "S3",
-                "skuCapacity": 2
+                "skuName": "S3"
               }
             },
             "dbName": "[format('{0}-{1}-{2}-{3}', parameters('project'), parameters('environment'), parameters('sqlDbIdentifier'), _1.unique4())]"
@@ -664,8 +661,7 @@
               "name": "[format('{0}/{1}', parameters('existingSqlServeName'), variables('dbName'))]",
               "location": "[parameters('location')]",
               "sku": {
-                "name": "[variables('environmentSettings')[parameters('environment')].skuName]",
-                "capacity": "[variables('environmentSettings')[parameters('environment')].skuCapacity]"
+                "name": "[variables('environmentSettings')[parameters('environment')].skuName]"
               },
               "properties": {
                 "collation": "SQL_Latin1_General_CP1_CI_AS"
@@ -710,8 +706,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.30.23.60470",
-              "templateHash": "3966415385219804701"
+              "version": "0.31.92.45157",
+              "templateHash": "8612942464346722615"
             }
           },
           "functions": [
@@ -829,8 +825,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.30.23.60470",
-              "templateHash": "16809722015463020073"
+              "version": "0.31.92.45157",
+              "templateHash": "17723793125847363233"
             }
           },
           "parameters": {

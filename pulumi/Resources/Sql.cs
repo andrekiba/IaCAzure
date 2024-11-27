@@ -51,7 +51,7 @@ public class Sql : ComponentResource
                 Location = args.Location,
                 PublicNetworkAccess = ServerNetworkAccessFlag.Enabled,
                 ResourceGroupName = args.ResourceGroupName,
-                ServerName = sqlServerName
+                //ServerName = sqlServerName
             }, new CustomResourceOptions { Parent = this });
         }
         
@@ -67,7 +67,7 @@ public class Sql : ComponentResource
             var sqlDbName = $"{args.Project}-{args.Environment}-sqldb";
             sqlDb = new Database(sqlDbName, new DatabaseArgs
             {
-                DatabaseName = sqlDbName,
+                //DatabaseName = sqlDbName,
                 Location = args.Location,
                 ResourceGroupName = args.ResourceGroupName,
                 ServerName = getServerResult.Apply(s => s.Name),

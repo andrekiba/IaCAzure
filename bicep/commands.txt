@@ -1,0 +1,7 @@
+az deployment sub create --location italynorth --parameters .\infra.dev.bicepparam
+
+az deployment sub what-if --location italynorth --parameters .\infra.dev.bicepparam
+
+az bicep build --file .\infra.bicep
+
+az bicep decompile --file .\infra.json

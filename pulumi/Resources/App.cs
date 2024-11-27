@@ -39,7 +39,7 @@ public class App : ComponentResource
             {
                 Kind = "app",
                 Location = args.Location,
-                Name = planName,
+                //Name = planName,
                 ResourceGroupName = args.ResourceGroupName,
                 Sku = skuArgs[args.Environment]
             }, new CustomResourceOptions { Parent = this });
@@ -64,7 +64,7 @@ public class App : ComponentResource
         var app = new WebApp(appName, new WebAppArgs
         {
             Location = args.Location,
-            Name = appName,
+            //Name = appName,
             ResourceGroupName = args.ResourceGroupName,
             ServerFarmId = args.CreateNewPlan ? plan!.Id : args.ExistingPlanId,
             Identity = new ManagedServiceIdentityArgs

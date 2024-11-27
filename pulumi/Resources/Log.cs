@@ -29,7 +29,7 @@ public class Log : ComponentResource
             var logWorkspaceName = $"{args.Project}-{args.Environment}-log";
             logWorkspace = new Workspace(logWorkspaceName, new WorkspaceArgs
             {
-                WorkspaceName = logWorkspaceName,
+                //WorkspaceName = logWorkspaceName,
                 ResourceGroupName = args.ResourceGroupName,
                 Sku = new WorkspaceSkuArgs { Name = "PerGB2018" },
                 RetentionInDays = 30
@@ -63,7 +63,7 @@ public class Log : ComponentResource
                 Location = args.Location,
                 RequestSource = RequestSource.Rest,
                 ResourceGroupName = args.ResourceGroupName,
-                ResourceName = aiName,
+                //ResourceName = aiName,
                 WorkspaceResourceId = getWorkspaceResult.Apply(s => s.Id)
             }, new CustomResourceOptions { Parent = this });
         }

@@ -29,7 +29,7 @@ public class Storage : ComponentResource
         var storageName = $"{args.Project.Replace("-", "")}{args.Environment}st";
         var storageAccount = new ST.StorageAccount(storageName, new ST.StorageAccountArgs
         {
-            AccountName = storageName,
+            //AccountName = storageName,
             ResourceGroupName = args.ResourceGroupName,
             Sku = skuArgs[args.Environment],
             Kind = ST.Kind.StorageV2

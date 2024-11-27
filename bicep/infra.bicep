@@ -49,7 +49,7 @@ module sqlSrvDeployment './modules/sqlSrv.bicep' = {
     location: location
     //administratorLogin: 'adminLogin'
     //administratorLoginPassword: 'adminPassword'
-    administratorManagedIdentityName: ''
+    administratorManagedIdentityName: appDeployment.outputs.appName
     administratorManagedIdentityId: appDeployment.outputs.appIdentity
   }
 }
